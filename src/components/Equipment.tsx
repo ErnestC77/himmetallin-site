@@ -1,5 +1,5 @@
-import { Reveal } from '../ui'
-import { equipment } from '../data'
+import { Ic, Reveal } from '../ui'
+import { equipment, equipmentNotes } from '../data'
 
 export default function Equipment() {
   return (
@@ -16,8 +16,19 @@ export default function Equipment() {
               </div>
               <div className="ebody">
                 <h3>{e.h}</h3>
-                <p>{e.p}</p>
+                <ul className="elist">
+                  {e.items.map((it) => <li key={it}>{it}</li>)}
+                </ul>
+                <p className="enote">{e.p}</p>
               </div>
+            </Reveal>
+          ))}
+        </div>
+        <div className="eq-notes">
+          {equipmentNotes.map((n) => (
+            <Reveal className="eqnote" key={n.h}>
+              <span className="ni"><Ic name={n.icon} className="ic" /></span>
+              <div><h4>{n.h}</h4><p>{n.p}</p></div>
             </Reveal>
           ))}
         </div>
