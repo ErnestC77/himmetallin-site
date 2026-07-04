@@ -17,7 +17,6 @@ export default function Equipment() {
               <div className="ebody">
                 <h3>{e.h}</h3>
                 <p>{e.p}</p>
-                <div className="specs">{e.specs.map((s) => <span key={s}>{s}</span>)}</div>
               </div>
             </Reveal>
           ))}

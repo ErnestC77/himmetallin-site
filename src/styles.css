@@ -144,8 +144,6 @@ header.scrolled .menu a,header.scrolled .nav-phone{color:var(--mut-d)}
 .ebody{padding:24px 24px 26px;display:flex;flex-direction:column;gap:12px;flex:1}
 .ecard h3{font-family:var(--disp);font-size:20px;text-transform:uppercase}
 .ecard p{font-size:13.5px;color:var(--mut-d)}
-.specs{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:6px}
-.specs span{font-family:var(--mono);font-size:11px;font-variant-numeric:tabular-nums;color:var(--metal-1);border:1px solid var(--dline);padding:5px 9px;border-radius:2px;letter-spacing:.02em}
 
 /* BENEFITS */
 .bgrid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:52px;border-top:1px solid var(--lline);border-left:1px solid var(--lline)}
