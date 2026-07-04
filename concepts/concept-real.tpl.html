@@ -1,0 +1,390 @@
+<style>
+  :root{
+    --ink:#0E0F12; --ink-2:#15171B; --dline:#282B31; --dline-2:#1C1E23;
+    --paper:#F2F3F0; --paper-2:#E7E9E3; --lline:#D5D8D1;
+    --fg-d:#EDEEF0; --mut-d:#969CA5;
+    --fg-l:#131519; --mut-l:#5C636D;
+    --metal-1:#C9CDD2; --metal-2:#8B9098; --metal-3:#5A5F67;
+    --disp:"Bahnschrift","DIN Next","Oswald",system-ui,sans-serif;
+    --body:system-ui,"Segoe UI",Roboto,sans-serif;
+    --mono:"Cascadia Mono",ui-monospace,Consolas,"SF Mono",monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--fg-l);font-family:var(--body);line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3,h4{font-family:var(--disp);font-weight:600;line-height:1.02;letter-spacing:.004em}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 clamp(20px,4vw,60px)}
+  .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:600;font-size:15px;letter-spacing:.06em;text-transform:uppercase;padding:15px 30px;cursor:pointer;border:1px solid transparent;transition:.22s;border-radius:1px}
+  .btn-light{background:var(--fg-d);color:var(--ink)}
+  .btn-light:hover{background:#fff;transform:translateY(-2px)}
+  .btn-dark{background:var(--fg-l);color:var(--paper)}
+  .btn-dark:hover{background:#000;transform:translateY(-2px)}
+  .btn-outline{background:transparent;border-color:currentColor;opacity:.82}
+  .btn-outline:hover{opacity:1}
+  svg.ic{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+  .sec{padding:clamp(72px,9vw,128px) 0;position:relative}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.26em;text-transform:uppercase;display:inline-flex;align-items:center;gap:12px;color:inherit;opacity:.9}
+  .eyebrow::before{content:"";width:26px;height:1px;background:currentColor}
+  h2.big{font-size:clamp(30px,4.8vw,58px);text-transform:uppercase;text-wrap:balance;margin-top:16px}
+  .lead{font-size:clamp(16px,1.4vw,19px);max-width:64ch;margin-top:18px}
+  .hm-logo path,.hm-logo polygon{fill:currentColor}
+
+  .on-dark{background:var(--ink);color:var(--fg-d)}
+  .on-dark .lead,.on-dark .mut{color:var(--mut-d)}
+  .on-light{background:var(--paper);color:var(--fg-l)}
+  .on-light .lead,.on-light .mut{color:var(--mut-l)}
+  .on-paper2{background:var(--paper-2)}
+
+  /* HEADER */
+  header{position:sticky;top:0;z-index:60;background:rgba(14,15,18,.7);backdrop-filter:blur(14px);border-bottom:1px solid var(--dline-2);color:var(--fg-d)}
+  .nav{display:flex;align-items:center;gap:34px;height:80px}
+  .brand{display:flex;align-items:center;color:currentColor}
+  .brand .hm-logo{height:40px;width:auto}
+  .nav .btn{padding:10px 18px;font-size:13px;letter-spacing:.05em;justify-content:center;line-height:1}
+  .menu{display:flex;align-items:center;gap:28px;margin-left:10px}
+  .menu a{display:inline-flex;align-items:center;line-height:1;white-space:nowrap;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut-d);transition:.15s}
+  .menu a:hover{color:var(--fg-d)}
+  .nav-right{margin-left:auto;display:flex;align-items:center;gap:22px}
+  .nav-phone{font-family:var(--mono);font-size:14px;letter-spacing:.04em;white-space:nowrap}
+
+  /* HERO */
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--dline)}
+  .hero::after{content:"";position:absolute;inset:0;z-index:0;opacity:.55;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+    background-size:72px 72px;mask-image:radial-gradient(100% 90% at 30% 12%,#000,transparent 82%)}
+  .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,4vw,60px);align-items:center;padding:clamp(56px,7vw,96px) 0}
+  .hero h1{font-size:clamp(34px,5.2vw,64px);text-transform:uppercase;letter-spacing:-.006em;max-width:15ch}
+  .hero .sub{font-size:clamp(15px,1.4vw,18px);color:var(--mut-d);max-width:52ch;margin:24px 0 30px}
+  .hero-chips{display:flex;flex-direction:column;gap:10px;margin-bottom:34px}
+  .hchip{display:flex;align-items:center;gap:12px;font-family:var(--disp);font-size:16px;text-transform:uppercase;letter-spacing:.02em}
+  .hchip svg{width:18px;height:18px;color:var(--metal-1);flex:none}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .hero-photo{position:relative;border:1px solid var(--dline);border-radius:3px;overflow:hidden;aspect-ratio:4/5;background:var(--ink-2)}
+  .hero-photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(.15) contrast(1.03)}
+  .hero-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(200deg,transparent 40%,rgba(14,15,18,.55))}
+  .hero-photo .cap{position:absolute;left:16px;bottom:14px;z-index:2;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-d)}
+  .hero-meta{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,auto);gap:38px;border-top:1px solid var(--dline);padding:24px 0 clamp(40px,5vw,56px);flex-wrap:wrap}
+  .hmeta .k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut-d)}
+  .hmeta .v{font-family:var(--disp);font-weight:600;font-size:clamp(17px,1.6vw,21px);text-transform:uppercase;margin-top:6px}
+
+  /* TICKER */
+  .ticker{background:var(--fg-d);color:var(--ink);overflow:hidden;white-space:nowrap}
+  .ticker .track{display:inline-flex;padding:13px 0;animation:scroll 36s linear infinite;will-change:transform}
+  .ticker:hover .track{animation-play-state:paused}
+  .ticker span{font-family:var(--disp);font-weight:600;font-size:15px;letter-spacing:.06em;text-transform:uppercase;padding:0 24px;display:inline-flex;align-items:center;gap:24px}
+  .ticker span::after{content:"";width:5px;height:5px;background:var(--ink);border-radius:50%;opacity:.4}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+
+  /* ABOUT */
+  .about-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,5vw,68px);margin-top:52px;align-items:start}
+  .about-copy p{color:var(--mut-l);margin-bottom:18px;max-width:56ch}
+  .about-points{margin-top:30px;border-top:1px solid var(--lline)}
+  .apoint{display:flex;gap:20px;padding:22px 0;border-bottom:1px solid var(--lline)}
+  .apoint .n{font-family:var(--disp);font-weight:600;font-size:clamp(26px,2.4vw,34px);color:var(--lline);line-height:1;flex:none;min-width:56px}
+  .apoint h4{font-family:var(--disp);font-size:18px;text-transform:uppercase;margin-bottom:4px}
+  .apoint p{font-size:14.5px;color:var(--mut-l)}
+  .about-media{position:relative;border:1px solid var(--lline);border-radius:3px;overflow:hidden;aspect-ratio:4/3;background:var(--paper-2)}
+  .about-media img{width:100%;height:100%;object-fit:cover}
+
+  /* DIRECTIONS */
+  .dgrid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:52px;border-top:1px solid var(--lline);border-left:1px solid var(--lline)}
+  .dcard{padding:34px 30px;border-right:1px solid var(--lline);border-bottom:1px solid var(--lline);position:relative;transition:.25s;background:transparent}
+  .dcard:hover{background:#fff}
+  .dcard .num{font-family:var(--mono);font-size:12px;color:var(--mut-l);letter-spacing:.1em;margin-bottom:18px}
+  .dcard .di{width:52px;height:52px;border:1px solid var(--lline);border-radius:2px;display:grid;place-items:center;color:var(--fg-l);margin-bottom:20px;transition:.25s}
+  .dcard:hover .di{border-color:var(--fg-l);background:var(--fg-l);color:var(--paper)}
+  .dcard h3{font-family:var(--disp);font-size:21px;text-transform:uppercase;margin-bottom:9px}
+  .dcard p{font-size:14px;color:var(--mut-l)}
+
+  /* EQUIPMENT (dark, with photos) */
+  .egrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:52px}
+  .ecard{border:1px solid var(--dline);border-radius:3px;overflow:hidden;background:var(--ink-2);transition:.22s;display:flex;flex-direction:column}
+  .ecard:hover{border-color:var(--metal-2);transform:translateY(-4px)}
+  .ephoto{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--ink)}
+  .ephoto img{width:100%;height:100%;object-fit:cover;filter:grayscale(.12) contrast(1.02);transition:.4s}
+  .ecard:hover .ephoto img{transform:scale(1.04)}
+  .ephoto .code{position:absolute;top:12px;left:12px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--fg-d);background:rgba(14,15,18,.7);border:1px solid var(--dline);padding:4px 9px;border-radius:2px;text-transform:uppercase}
+  .ebody{padding:24px 24px 26px;display:flex;flex-direction:column;gap:12px;flex:1}
+  .ecard h3{font-family:var(--disp);font-size:20px;text-transform:uppercase}
+  .ecard p{font-size:13.5px;color:var(--mut-d)}
+  .specs{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:6px}
+  .specs span{font-family:var(--mono);font-size:11px;font-variant-numeric:tabular-nums;color:var(--metal-1);border:1px solid var(--dline);padding:5px 9px;border-radius:2px;letter-spacing:.02em}
+
+  /* BENEFITS */
+  .bgrid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:52px;border-top:1px solid var(--lline);border-left:1px solid var(--lline)}
+  .bitem{padding:30px 26px;border-right:1px solid var(--lline);border-bottom:1px solid var(--lline);display:flex;gap:16px;align-items:flex-start}
+  .bitem .bi{flex:none;color:var(--fg-l)}
+  .bitem p{font-size:14.5px;color:var(--mut-l)}
+
+  /* STANDARDS */
+  .stgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:52px}
+  .stcard{border:1px solid var(--lline);border-radius:3px;padding:24px;background:#fff}
+  .stcard .st-h{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-l);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+  .stcard .st-h svg{width:18px;height:18px;color:var(--fg-l)}
+  .stcard p{font-size:13px;color:var(--mut-l)}
+
+  /* CONTACTS */
+  .cbox{display:grid;grid-template-columns:1.1fr .9fr;border:1px solid var(--dline);border-radius:3px;overflow:hidden;margin-top:52px}
+  .cform{padding:clamp(28px,3.6vw,48px);background:var(--ink-2)}
+  .cform h3{font-family:var(--disp);font-size:26px;text-transform:uppercase;margin-bottom:8px}
+  .cform p{color:var(--mut-d);margin-bottom:26px;font-size:15px}
+  .field{margin-bottom:18px}
+  .field label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut-d);margin-bottom:8px}
+  .field input,.field textarea{width:100%;background:var(--ink);border:1px solid var(--dline);border-radius:2px;padding:14px 15px;font-family:var(--body);font-size:15px;color:var(--fg-d)}
+  .field input::placeholder,.field textarea::placeholder{color:var(--mut-d);opacity:.6}
+  .field input:focus,.field textarea:focus{outline:none;border-color:var(--metal-1);box-shadow:0 0 0 3px rgba(201,205,210,.14)}
+  .cinfo{padding:clamp(28px,3.6vw,48px);background:var(--ink);display:flex;flex-direction:column}
+  .cinfo h3{font-family:var(--disp);font-size:20px;text-transform:uppercase;color:var(--fg-d);margin-bottom:26px}
+  .cline{display:flex;gap:15px;align-items:flex-start;margin-bottom:22px}
+  .cline .ci{flex:none;color:var(--metal-1)}
+  .cline .l{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut-d)}
+  .cline .v{font-family:var(--disp);font-size:16px;text-transform:uppercase}
+  .req{margin-top:8px;border-top:1px solid var(--dline);padding-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:14px 20px}
+  .req div{font-size:13px}
+  .req .rk{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut-d)}
+  .req .rv{color:var(--fg-d);margin-top:2px}
+
+  /* FOOTER */
+  footer{background:var(--ink);color:var(--mut-d);padding:56px 0 30px;border-top:1px solid var(--dline)}
+  .fcols{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:44px;padding-bottom:38px;border-bottom:1px solid var(--dline-2)}
+  .fcols .brand{color:var(--fg-d)}.fcols .brand .hm-logo{height:30px}
+  footer h5{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-d);margin-bottom:16px}
+  footer li{list-style:none;margin-bottom:11px;font-size:14px}
+  footer a:hover{color:var(--fg-d)}
+  .fbot{display:flex;justify-content:space-between;padding-top:22px;font-family:var(--mono);font-size:12px;color:#5A5F67;flex-wrap:wrap;gap:10px}
+
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.ticker .track{animation:none}}
+  @media(max-width:940px){
+    .hero-grid,.about-grid,.dgrid,.egrid,.bgrid,.stgrid,.cbox,.fcols{grid-template-columns:1fr}
+    .menu,.nav-phone{display:none}
+    .hero-meta{grid-template-columns:1fr 1fr;gap:20px}
+    .hero-photo{aspect-ratio:16/10}
+    .req{grid-template-columns:1fr}
+  }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="hmlogo" viewBox="48 210 408 80" class="hm-logo">
+  <polygon points="448.87 241.1 448.87 258.52 444.37 258.52 444.37 251.69 431.6 251.69 431.6 258.52 426.95 258.52 426.95 241.1 431.6 241.1 431.6 247.63 444.15 247.63 444.37 247.63 444.37 241.1 448.87 241.1"/>
+  <path d="M421.58,243.56v14.88h-4.5v-13.06c-.35.24-.66.56-.94.87-3.17,3.45-6.28,7.49-9.58,10.75-1.52,1.49-3.58,1.85-5.62,1.26-.82-.23-2.29-1.29-2.29-2.21v-15.02h4.65v13.06l.39-.19c3.18-3.41,6.17-7.05,9.41-10.4.73-.75,1.71-1.91,2.69-2.24,1.32-.45,4.09-.39,5.08.76.2.23.72,1.31.72,1.56Z"/>
+  <path d="M392.34,241.1v17.42h-4.65v-13.21h-8.35c-.65,0-1.47,1.07-1.7,1.64-1.14,2.87-1.51,8.87-3.99,10.67-.42.3-1.69.9-2.15.9h-3.85v-4.21h2.54c.42,0,1.05-1.04,1.2-1.41,1.13-2.76,1.4-7.72,3.37-9.84.66-.71,2.77-1.96,3.71-1.96h13.86Z"/>
+  <path d="M362.79,241.1v17.42h-4.65v-13.21h-8.35c-.65,0-1.47,1.07-1.7,1.64-1.14,2.87-1.51,8.87-3.99,10.67-.42.3-1.69.9-2.15.9h-3.85v-4.21h2.54c.42,0,1.05-1.04,1.2-1.41,1.13-2.76,1.4-7.72,3.37-9.84.66-.71,2.77-1.96,3.7-1.96h13.86Z"/>
+  <path d="M334.68,257.93c-.74-2.71-2.11-6.66-3.02-9.46-1.26-3.82-1.9-7.04-6.7-7.38-.88-.06-1.85-.13-2.84-.14-.04,0-.08,0-.12,0h0c-1.02.01-2.03.08-2.95.15-4.8.34-5.45,3.56-6.7,7.38-.92,2.8-2.42,6.72-3.03,9.46-.04.2-.09.39-.12.59h4.7l1.25-3.78,6.85.05,6.85-.05,1.25,3.78h4.7c-.03-.2-.07-.39-.12-.59ZM316.37,250.82c.97-2.05.65-5.31,3.55-5.52.41-.03,1.23-.06,2.08-.06.85,0,1.67.03,2.08.06,2.9.21,2.58,3.47,3.55,5.52h-11.26Z"/>
+  <path d="M308.5,241.1v4.21h-9.58v13.21h-4.79v-13.21h-9.29v-4.21h23.66Z"/>
+  <path d="M280.63,254.31v4.21h-16.18c-2.05,0-4.45-1.83-5.12-3.73-.69-1.98-.74-8.01-.01-9.96.64-1.72,3.14-3.72,4.99-3.72h16.33v4.06h-15.17c-.45,0-1.35.61-1.59,1.03-.14.25-.57,1.59-.16,1.59h14.73v3.92h-14.95c-.03.66.15,1.71.65,2.18.08.07.69.43.73.43h15.75Z"/>
+  <path d="M215.66,244.29v14.15h-4.79v-12.99l-.65-.07-6.75,11.54c-.76,1.05-2.2,1.58-3.64,1.6h0c-1.45,0-2.91-.53-3.68-1.59l-6.75-11.54-.65.07v12.99h-4.79v-14.15c0-1.68,2.01-3.11,3.56-3.26,2.11-.21,4.2-.07,5.56,1.69,2.25,2.91,4.02,7.48,6.15,10.69.28.43.42.67.57.7.15-.01.29-.26.59-.71,2.13-3.21,3.9-7.78,6.15-10.69,1.36-1.77,3.45-1.91,5.56-1.69,1.55.16,3.56,1.59,3.56,3.26Z"/>
+  <path d="M253.17,244.29v14.15h-4.79v-12.99l-.65-.07-6.75,11.54c-.76,1.05-2.2,1.58-3.64,1.6h0c-1.45,0-2.91-.53-3.68-1.59l-6.75-11.54-.65.07v12.99h-4.79v-14.15c0-1.68,2.01-3.11,3.56-3.26,2.11-.21,4.2-.07,5.56,1.69,2.25,2.91,4.02,7.48,6.15,10.69.28.43.42.67.57.7.15-.01.29-.26.59-.71,2.13-3.21,3.9-7.78,6.15-10.69,1.36-1.77,3.45-1.91,5.56-1.69,1.55.16,3.56,1.59,3.56,3.26Z"/>
+  <path d="M176.85,243.56v14.88h-4.5v-13.06c-.35.24-.66.56-.94.87-3.17,3.45-6.28,7.49-9.58,10.75-1.52,1.49-3.58,1.85-5.62,1.26-.82-.23-2.29-1.29-2.29-2.21v-15.02h4.65v13.06l.39-.19c3.18-3.41,6.17-7.05,9.41-10.4.73-.75,1.71-1.91,2.69-2.24,1.32-.45,4.09-.39,5.08.76.2.23.72,1.31.72,1.56Z"/>
+  <polygon points="149.41 258.52 143.1 258.52 136.57 251.98 130.03 258.52 123.72 258.52 132.71 249.71 123.86 241.1 130.18 241.1 136.71 247.63 142.95 241.1 149.12 241.1 140.55 249.73 149.41 258.52"/>
+  <path d="M66.14,285.4c-11-9.24-18.01-23.49-13.76-37.63,8.02-26.69,41.17-36.83,66.25-32.01,1.48.28,2.94.66,4.38,1.07l-6.98,12.92c-2.26-.48-4.54-.93-6.84-1.17-20.13-2.12-45.52,5.48-51.9,26.88-3.15,10.56,2.12,22.2,9.8,29.94"/>
+  <path d="M70.39,285.4c-.6-.48-1.2-.95-1.76-1.47-8.85-8.21-10.92-21.19-5.13-31.75,9.17-16.72,32.17-20.49,49.56-16.82l-5.92,10.98c-1.92-.32-3.86-.59-5.81-.75-13.89-1.12-32.02,3.51-36.32,18.39-2.22,7.68.44,15.98,6.16,21.42"/>
+  <path d="M74.38,285.4c-.74-.59-1.83-1.7-2.21-2.12-7.7-8.6-5.6-20.54,3.63-27.04,8.04-5.66,19.14-6.67,28.62-4.58l-4.31,7.91c-1.28-.24-2.55-.44-3.83-.55-7.71-.67-16.91,1.09-22.22,7.01-5.21,5.81-4.21,14.1,1.19,19.36"/>
+  <path d="M77.84,285.4c-.46-.36-1.13-1.05-1.37-1.31-4.76-5.32-3.46-12.7,2.25-16.72,4.97-3.5,12.79-3.88,18.65-2.59l-2.6,4.92c-.78-.24-2.59-.55-3.39-.62-4.76-.41-10.46.68-13.74,4.34-3.22,3.6-2.6,8.72.74,11.97"/>
+</symbol></svg>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="ХИММЕТАЛЛИН — на главную"><svg class="hm-logo" role="img"><use href="#hmlogo"/></svg></a>
+    <nav class="menu">
+      <a href="#about">О компании</a><a href="#dir">Направления</a><a href="#eq">Оборудование</a><a href="#std">Стандарты</a><a href="#contacts">Контакты</a>
+    </nav>
+    <div class="nav-right">
+      <span class="nav-phone">+7 (000) 000-00-00</span>
+      <a class="btn btn-light" href="#contacts">Заявка</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero on-dark" id="top">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow reveal">НПЗ / металлургия / инжиниринг</div>
+        <h1 class="reveal" style="margin-top:20px">Инжиниринг и комплексное оснащение</h1>
+        <p class="sub reveal">ООО «ХИММЕТАЛЛИН» — специализированная инжиниринговая компания: полный комплекс услуг по проектированию технологических установок и комплектации предприятий нефтеперерабатывающей и металлургической промышленности.</p>
+        <div class="hero-chips reveal">
+          <div class="hchip"><svg class="ic" viewBox="0 0 24 24"><path d="M9 3v18M3 9h18M4 4h16v16H4z"/></svg>Проектирование технологических установок</div>
+          <div class="hchip"><svg class="ic" viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5ZM2 17l10 5 10-5"/></svg>Комплексная поставка оборудования</div>
+          <div class="hchip"><svg class="ic" viewBox="0 0 24 24"><path d="M14 7l3 3M5 19l9-9-3-3-9 9v3zM18 3l3 3"/></svg>Шеф-монтаж и сервис</div>
+        </div>
+        <div class="hero-cta reveal">
+          <a class="btn btn-light" href="#contacts">Оставить заявку<svg class="ic" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn-outline" href="#eq">Оборудование</a>
+        </div>
+      </div>
+      <div class="hero-photo reveal">
+        <img src="__IMG_HERO__" alt="Промышленный объект нефтепереработки и блочно-модульная установка">
+        <span class="cap">Объекты нефтепереработки и металлургии</span>
+      </div>
+    </div>
+    <div class="hero-meta reveal">
+      <div class="hmeta"><div class="k">Проектный контур</div><div class="v">Стадии П / Р</div></div>
+      <div class="hmeta"><div class="k">Опасные производства</div><div class="v">I и II классы</div></div>
+      <div class="hmeta"><div class="k">Нормативы</div><div class="v">ФНП · СПДС · №87</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true"><div class="track">
+  <span>Проектирование установок НПЗ</span><span>Насосное оборудование</span><span>Промышленное охлаждение</span><span>Теплообмен</span><span>Ёмкостной и сепарационный флот</span><span>Модульная энергетика</span><span>АСУ ТП · ПАЗ · Exd / Exi</span><span>Шеф-монтаж и сервис</span>
+  <span>Проектирование установок НПЗ</span><span>Насосное оборудование</span><span>Промышленное охлаждение</span><span>Теплообмен</span><span>Ёмкостной и сепарационный флот</span><span>Модульная энергетика</span><span>АСУ ТП · ПАЗ · Exd / Exi</span><span>Шеф-монтаж и сервис</span>
+</div></div>
+
+<!-- ABOUT -->
+<section class="sec on-light" id="about"><div class="wrap">
+  <div class="eyebrow reveal">О компании</div>
+  <h2 class="big reveal">Технологический партнёр<br>для сложных промышленных объектов</h2>
+  <div class="about-grid">
+    <div class="about-copy reveal">
+      <p>Компания обладает техническими компетенциями и пониманием строгости отраслевых стандартов. Мы решаем задачи модернизации, капитального строительства, проектирования и материально-технического снабжения.</p>
+      <p>Миссия — экономически эффективные, безопасные и высокопроизводительные решения. Мы берём на себя ответственность за жизненный цикл проекта: от обследования и проектно-сметной документации до подбора, производства, поставки и сервисного обслуживания оборудования.</p>
+      <div class="about-points">
+        <div class="apoint"><div class="n mono">№1</div><div><h4>Обследование</h4><p>Предпроектное обследование и разработка технических решений.</p></div></div>
+        <div class="apoint"><div class="n mono">№2</div><div><h4>Поставка</h4><p>Подбор, производство и прямая поставка оборудования.</p></div></div>
+        <div class="apoint"><div class="n mono">№3</div><div><h4>Единая ответственность</h4><p>Снижение рисков на стыке проектирования и снабжения.</p></div></div>
+      </div>
+    </div>
+    <div class="about-media reveal"><img src="__IMG_ABOUT__" alt="Проектирование технологической установки и систем ПАЗ / АСУ ТП"></div>
+  </div>
+</div></section>
+
+<!-- DIRECTIONS -->
+<section class="sec on-light on-paper2" id="dir"><div class="wrap">
+  <div class="eyebrow reveal">Основные направления</div>
+  <h2 class="big reveal">Компетенции для объектов НПЗ, химии и металлургии</h2>
+  <div class="dgrid">
+    <div class="dcard reveal"><div class="num">№1</div><div class="di"><svg class="ic" viewBox="0 0 24 24"><path d="M4 20h16M6 20V9l6-5 6 5v11M9 20v-6h6v6"/></svg></div><h3>Проектирование установок</h3><p>Проектные решения для технологических процессов НПЗ в соответствии с требованиями Ростехнадзора, СПДС, ФНП и Постановления №87.</p></div>
+    <div class="dcard reveal"><div class="num">№2</div><div class="di"><svg class="ic" viewBox="0 0 24 24"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></div><h3>Гидравлические системы</h3><p>Подбор и поставка промышленных насосов для агрессивных, вязких, токсичных, легковоспламеняющихся и высокотемпературных нефтепродуктов.</p></div>
+    <div class="dcard reveal"><div class="num">№3</div><div class="di"><svg class="ic" viewBox="0 0 24 24"><path d="M12 2v6M12 16v6M2 12h6M16 12h6M5 5l4 4M15 15l4 4"/></svg></div><h3>Промышленное охлаждение</h3><p>Аппараты воздушного охлаждения и градирни всех типов, кроме башенных, для стабильного температурного режима процессов.</p></div>
+    <div class="dcard reveal"><div class="num">№4</div><div class="di"><svg class="ic" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16M8 4v16M16 4v16"/></svg></div><h3>Теплообменное оборудование</h3><p>Расчёт и дистрибуция кожухотрубных, спиральных, пластинчатых, разборных и сварных теплообменников.</p></div>
+    <div class="dcard reveal"><div class="num">№5</div><div class="di"><svg class="ic" viewBox="0 0 24 24"><path d="M6 2h12v20l-6-3-6 3zM6 8h12"/></svg></div><h3>Ёмкостной и сепарационный флот</h3><p>Технологические ёмкости, резервуары и сепарационное оборудование для разделения, подготовки и хранения многофазных сред.</p></div>
+    <div class="dcard reveal"><div class="num">№6</div><div class="di"><svg class="ic" viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg></div><h3>Модульная энергетика</h3><p>Проектирование и поставка БТП и блочно-модульных котельных высокой заводской готовности для теплоснабжения инфраструктуры.</p></div>
+  </div>
+</div></section>
+
+<!-- EQUIPMENT -->
+<section class="sec on-dark" id="eq"><div class="wrap">
+  <div class="eyebrow reveal">Поставляемое оборудование</div>
+  <h2 class="big reveal">Критически важные технологические узлы</h2>
+  <div class="egrid">
+    <div class="ecard reveal">
+      <div class="ephoto"><span class="code">PUMP</span><img src="__IMG_PUMP__" alt="Насосное оборудование"></div>
+      <div class="ebody"><h3>Насосное оборудование</h3><p>Герметичные насосы с магнитной муфтой, центробежные химические, бочковые и контейнерные, полупогружные, консольно-моноблочные, мембранные, дозировочные и винтовые агрегаты.</p>
+        <div class="specs"><span>5–3500 м³/ч</span><span>до 2500 м</span><span>до 25 МПа</span><span>-80…+450 °C</span></div></div>
+    </div>
+    <div class="ecard reveal">
+      <div class="ephoto"><span class="code">COOLING</span><img src="__IMG_COOL__" alt="Промышленное охлаждение"></div>
+      <div class="ebody"><h3>Промышленное охлаждение</h3><p>Аппараты воздушного охлаждения: горизонтальные, зигзагообразные, малопоточные, блочные и для вязких продуктов. Градирни различных типов, кроме башенных.</p>
+        <div class="specs"><span>0,6–16 МПа</span><span>до 32 МПа</span><span>У1 / УХЛ1</span><span>до -60 °C</span></div></div>
+    </div>
+    <div class="ecard reveal">
+      <div class="ephoto"><span class="code">HX</span><img src="__IMG_HX__" alt="Теплообменное оборудование"></div>
+      <div class="ebody"><h3>Теплообменное оборудование</h3><p>Кожухотрубные, пластинчатые и спиральные теплообменники. Исполнения с неподвижными трубными решётками, компенсаторами, плавающей головкой и U-образными трубами.</p>
+        <div class="specs"><span>Ø 159–2500 мм</span><span>до 4000 м²</span><span>до 10 МПа</span><span>-100…+400 °C</span></div></div>
+    </div>
+    <div class="ecard reveal">
+      <div class="ephoto"><span class="code">VESSEL</span><img src="__IMG_VESSEL__" alt="Ёмкостное и сепарационное оборудование"></div>
+      <div class="ebody"><h3>Ёмкостное и сепарационное</h3><p>Технологические ёмкости, сосуды и аппараты под давлением, сепараторы с сетчатыми, жалюзийными и коалесцирующими внутренними устройствами.</p>
+        <div class="specs"><span>1–200 м³</span><span>до 16 МПа</span><span>стенка до 100 мм</span><span>09Г2С / 12ХМ</span></div></div>
+    </div>
+    <div class="ecard reveal">
+      <div class="ephoto"><span class="code">BOILER</span><img src="__IMG_BOILER__" alt="БТП и блочно-модульные котельные"></div>
+      <div class="ebody"><h3>БТП и котельные</h3><p>Блочные тепловые пункты, автоматизированные блочно-модульные котельные, шкафы управления на российских контроллерах, интеграция с АСУ ТП.</p>
+        <div class="specs"><span>0,5–50 МВт</span><span>0,1–15 Гкал/ч</span><span>КПД 92–95%</span><span>Modbus / Profibus</span></div></div>
+    </div>
+    <div class="ecard reveal">
+      <div class="ephoto"><span class="code">ICS</span><img src="__IMG_ACS__" alt="АСУ ТП, ПАЗ и взрывозащита"></div>
+      <div class="ebody"><h3>АСУ ТП, ПАЗ и взрывозащита</h3><p>Проектирование систем противоаварийной автоматической защиты, автоматизированных систем управления технологическими процессами и оборудование с исполнением Exd / Exi.</p>
+        <div class="specs"><span>I–II класс</span><span>ТР ТС 012/2011</span><span>Exd / Exi</span><span>АСУ ТП</span></div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- BENEFITS -->
+<section class="sec on-light"><div class="wrap">
+  <div class="eyebrow reveal">Почему ХИММЕТАЛЛИН</div>
+  <h2 class="big reveal">Результат для объекта заказчика</h2>
+  <div class="bgrid">
+    <div class="bitem reveal"><span class="bi"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><p>Полная совместимость оборудования с технологическими цепочками НПЗ.</p></div>
+    <div class="bitem reveal"><span class="bi"><svg class="ic" viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5ZM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span><p>Точная интеграция поставляемых узлов в существующие технологические процессы.</p></div>
+    <div class="bitem reveal"><span class="bi"><svg class="ic" viewBox="0 0 24 24"><path d="M12 8v4l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg></span><p>Сокращение сроков строительно-монтажных работ за счёт комплексной комплектации.</p></div>
+    <div class="bitem reveal"><span class="bi"><svg class="ic" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></span><p>Снижение технических и юридических рисков при вводе объектов в эксплуатацию.</p></div>
+    <div class="bitem reveal"><span class="bi"><svg class="ic" viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg></span><p>Повышение энергоэффективности внедряемых решений и стабильности эксплуатации.</p></div>
+    <div class="bitem reveal"><span class="bi"><svg class="ic" viewBox="0 0 24 24"><path d="M20.5 14.3 18 22l-6-3-6 3 2.5-7.7M12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"/></svg></span><p>Сервисное сопровождение и техническая поддержка после поставки оборудования.</p></div>
+  </div>
+</div></section>
+
+<!-- STANDARDS -->
+<section class="sec on-light on-paper2" id="std"><div class="wrap">
+  <div class="eyebrow reveal">Стандарты и нормативы</div>
+  <h2 class="big reveal">Документация и соответствие отраслевым требованиям</h2>
+  <div class="stgrid">
+    <div class="stcard reveal"><div class="st-h"><svg class="ic" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>ФНП / Ростехнадзор</div><p>Соблюдение правил взрывобезопасности для химических, нефтехимических и нефтеперерабатывающих производств.</p></div>
+    <div class="stcard reveal"><div class="st-h"><svg class="ic" viewBox="0 0 24 24"><path d="M9 3v18M3 9h18M4 4h16v16H4z"/></svg>ГОСТ / СПДС</div><p>Проектирование с учётом ГОСТ Р 21.101, ГОСТ 34347-2017, ГОСТ 32601-2022, ГОСТ Р 51364-99 и смежных требований.</p></div>
+    <div class="stcard reveal"><div class="st-h"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>ТР ТС 010/2011</div><p>Соответствие требованиям безопасности машин и оборудования для промышленного применения.</p></div>
+    <div class="stcard reveal"><div class="st-h"><svg class="ic" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Z"/></svg>ТР ТС 032/2013</div><p>Соответствие требованиям безопасности оборудования, работающего под избыточным давлением.</p></div>
+    <div class="stcard reveal"><div class="st-h"><svg class="ic" viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg>ТР ТС 012/2011</div><p>Оборудование для работы во взрывоопасных средах, включая решения с исполнением Exd и Exi.</p></div>
+    <div class="stcard reveal"><div class="st-h"><svg class="ic" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m0 8v3a2 2 0 0 0 2 2h3m8-18h3a2 2 0 0 1 2 2v3m0 8v3a2 2 0 0 1-2 2h-3M9 9h6v6H9z"/></svg>Российское ПО</div><p>«Компас-3D», «Model Studio CS», «СТАРТ-Проф» и ПО «Гидросистема» для инженерных расчётов.</p></div>
+    <div class="stcard reveal"><div class="st-h"><svg class="ic" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M9 13h6M9 17h4"/></svg>Стадии П / Р</div><p>Разработка проектной документации для экспертизы и рабочей документации для реализации объекта.</p></div>
+    <div class="stcard reveal"><div class="st-h"><svg class="ic" viewBox="0 0 24 24"><path d="M3 3v18h18M7 15l3-3 3 3 5-6"/></svg>ТЭО</div><p>Технико-экономическое обоснование решений до перехода к детальному проектированию и поставкам.</p></div>
+  </div>
+</div></section>
+
+<!-- CONTACTS -->
+<section class="sec on-dark" id="contacts"><div class="wrap">
+  <div class="eyebrow reveal">Контакты и реквизиты</div>
+  <h2 class="big reveal">Официальная информация компании</h2>
+  <div class="cbox">
+    <form class="cform" onsubmit="return false">
+      <h3>Оставить заявку</h3>
+      <p>Опишите задачу — инженер свяжется с вами в рабочее время.</p>
+      <div class="field"><label for="f-name">Имя *</label><input id="f-name" placeholder="Как к вам обращаться"></div>
+      <div class="field"><label for="f-phone">Телефон *</label><input id="f-phone" placeholder="+7 (___) ___-__-__"></div>
+      <div class="field"><label for="f-task">Задача</label><textarea id="f-task" rows="3" placeholder="Кратко о проекте или оборудовании"></textarea></div>
+      <button class="btn btn-light" style="width:100%;justify-content:center">Отправить заявку</button>
+    </form>
+    <div class="cinfo">
+      <h3>ООО «ХИММЕТАЛЛИН»</h3>
+      <div class="cline"><span class="ci"><svg class="ic" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"/></svg></span><div><div class="l">Телефон</div><div class="v">+7 (000) 000-00-00</div></div></div>
+      <div class="cline"><span class="ci"><svg class="ic" viewBox="0 0 24 24"><path d="M4 4h16v16H4zM4 6l8 6 8-6"/></svg></span><div><div class="l">Email</div><div class="v" style="text-transform:none">info@himmetallin.ru</div></div></div>
+      <div class="cline"><span class="ci"><svg class="ic" viewBox="0 0 24 24"><path d="M12 21s-7-6.3-7-11a7 7 0 0 1 14 0c0 4.7-7 11-7 11ZM12 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg></span><div><div class="l">Адрес</div><div class="v" style="text-transform:none">Фактический и юридический адрес — уточняется</div></div></div>
+      <div class="cline"><span class="ci"><svg class="ic" viewBox="0 0 24 24"><path d="M12 8v4l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg></span><div><div class="l">График работы</div><div class="v">Пн–Пт · 09:00–18:00</div></div></div>
+      <div class="req">
+        <div><div class="rk">ИНН</div><div class="rv">уточняется</div></div>
+        <div><div class="rk">КПП</div><div class="rv">уточняется</div></div>
+        <div><div class="rk">ОГРН</div><div class="rv">уточняется</div></div>
+        <div><div class="rk">Банк / р/с</div><div class="rv">уточняется</div></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="fcols">
+    <div>
+      <a class="brand" href="#top" aria-label="ХИММЕТАЛЛИН"><svg class="hm-logo" role="img"><use href="#hmlogo"/></svg></a>
+      <p style="margin-top:18px;font-size:14px;max-width:36ch">Инжиниринг и комплексное оснащение объектов нефтепереработки и металлургии.</p>
+    </div>
+    <div><h5>Навигация</h5><ul><li><a href="#about">О компании</a></li><li><a href="#dir">Направления</a></li><li><a href="#eq">Оборудование</a></li><li><a href="#std">Стандарты</a></li><li><a href="#contacts">Контакты</a></li></ul></div>
+    <div><h5>Контакты</h5><ul><li>+7 (000) 000-00-00</li><li>info@himmetallin.ru</li><li>Пн–Пт · 09:00–18:00</li></ul></div>
+  </div>
+  <div class="fbot"><span>© 2026 ООО «ХИММЕТАЛЛИН». Все права защищены.</span><span>Инжиниринг и комплексное оснащение</span></div>
+</div></footer>
+
+<script>
+  (function(){
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('.reveal').forEach(function(e){e.classList.add('in')}); return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.reveal').forEach(function(e){io.observe(e)});
+  })();
+</script>
