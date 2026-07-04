@@ -14,7 +14,7 @@ export default function Header() {
   }, [])
 
   return (
-    <header className={scrolled ? 'scrolled' : ''}>
+    <header className={scrolled || open ? 'scrolled' : ''}>
       <div className="wrap nav">
         <a className="brand" href="#top" aria-label="ХИММЕТАЛЛИН — на главную"><Logo /></a>
         <nav className="menu">
