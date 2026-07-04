@@ -2,6 +2,7 @@ import Header from './components/Header'
 import Hero from './components/Hero'
 import Ticker from './components/Ticker'
 import About from './components/About'
+import Design from './components/Design'
 import Directions from './components/Directions'
 import Equipment from './components/Equipment'
 import Applications from './components/Applications'
@@ -18,6 +19,7 @@ export default function App() {
         <Hero />
         <Ticker />
         <About />
+        <Design />
         <Directions />
         <Equipment />
         <Applications />
