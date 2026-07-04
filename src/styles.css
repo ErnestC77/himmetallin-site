@@ -94,7 +94,9 @@ header.scrolled .menu a,header.scrolled .nav-phone{color:var(--mut-d)}
 /* TICKER */
 .ticker{background:var(--fg-d);color:var(--ink);overflow:hidden;white-space:nowrap}
 .ticker .track{display:inline-flex;padding:13px 0;animation:scroll 36s linear infinite;will-change:transform}
-.ticker:hover .track{animation-play-state:paused}
+/* Пауза по hover только на устройствах с настоящим курсором: на iOS :hover «залипает»
+   после касания и навсегда останавливает ленту. */
+@media(hover:hover) and (pointer:fine){.ticker:hover .track{animation-play-state:paused}}
 .ticker span{font-family:var(--disp);font-weight:600;font-size:15px;letter-spacing:.06em;text-transform:uppercase;padding:0 24px;display:inline-flex;align-items:center;gap:24px}
 .ticker span::after{content:"";width:5px;height:5px;background:var(--ink);border-radius:50%;opacity:.4}
 @keyframes scroll{to{transform:translateX(-50%)}}
@@ -191,6 +193,9 @@ footer a:hover{color:var(--fg-d)}
 .reveal.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){
   .reveal{opacity:1;transform:none;transition:none}
+  /* Не крутим ленту, но оставляем её прокручиваемой пальцем/колесом */
+  .ticker{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .ticker::-webkit-scrollbar{display:none}
   .ticker .track{animation:none}
 }
 @media(max-width:940px){
