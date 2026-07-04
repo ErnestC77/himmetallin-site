@@ -7,7 +7,6 @@ import Directions from './components/Directions'
 import Equipment from './components/Equipment'
 import Applications from './components/Applications'
 import Benefits from './components/Benefits'
-import Standards from './components/Standards'
 import Contacts from './components/Contacts'
 import Footer from './components/Footer'
 
@@ -24,7 +23,6 @@ export default function App() {
         <Equipment />
         <Applications />
         <Benefits />
-        <Standards />
         <Contacts />
       </main>
       <Footer />

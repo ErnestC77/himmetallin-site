@@ -1,5 +1,5 @@
 import { Ic, Reveal } from '../ui'
-import { equipment, equipmentNotes } from '../data'
+import { equipment, equipmentNotes, equipmentCert } from '../data'
 
 export default function Equipment() {
   return (
@@ -32,6 +32,10 @@ export default function Equipment() {
             </Reveal>
           ))}
         </div>
+        <Reveal className="eq-cert">
+          <span className="ni"><Ic name="shield" className="ic" /></span>
+          <p>{equipmentCert}</p>
+        </Reveal>
       </div>
     </section>
   )

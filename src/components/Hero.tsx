@@ -1,5 +1,5 @@
 import { Ic, Reveal } from '../ui'
-import { heroChips, heroMeta, photos } from '../data'
+import { heroChips, photos } from '../data'
 
 export default function Hero() {
   return (
@@ -25,11 +25,6 @@ export default function Hero() {
             </div>
           </Reveal>
         </div>
-        <Reveal className="hero-meta">
-          {heroMeta.map((m) => (
-            <div className="hmeta" key={m.k}><div className="k">{m.k}</div><div className="v">{m.v}</div></div>
-          ))}
-        </Reveal>
       </div>
     </section>
   )

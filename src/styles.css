@@ -79,7 +79,6 @@ header.scrolled .menu a,header.scrolled .nav-phone{color:var(--mut-d)}
 .hchip{display:flex;align-items:center;gap:12px;font-family:var(--disp);font-size:16px;text-transform:uppercase;letter-spacing:.02em}
 .hchip svg{width:18px;height:18px;color:var(--metal-1);flex:none}
 .hero-cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-.hero-meta{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,auto);gap:38px;border-top:1px solid rgba(255,255,255,.16);margin-top:clamp(42px,7vh,74px);padding-top:24px}
 .hmeta .k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut-d)}
 .hmeta .v{font-family:var(--disp);font-weight:600;font-size:clamp(17px,1.6vw,21px);text-transform:uppercase;margin-top:6px}
 
@@ -113,7 +112,8 @@ header.scrolled .menu a,header.scrolled .nav-phone{color:var(--mut-d)}
 .about-media img{width:100%;height:100%;object-fit:cover}
 
 /* DESIGN (проектирование установок) */
-.design-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(24px,4vw,56px);margin-top:52px;align-items:stretch}
+.design-meta{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:38px;border-top:1px solid var(--dline);margin-top:32px;padding-top:24px}
+.design-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(24px,4vw,56px);margin-top:44px;align-items:stretch}
 .design-media{position:relative;border:1px solid var(--dline);border-radius:3px;overflow:hidden;background:var(--ink-2);min-height:320px}
 .design-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(.1) contrast(1.02)}
 .design-media::after{content:"";position:absolute;inset:0;background:linear-gradient(200deg,transparent 45%,rgba(14,15,18,.6))}
@@ -153,19 +153,15 @@ header.scrolled .menu a,header.scrolled .nav-phone{color:var(--mut-d)}
 .eqnote .ni{flex:none;color:var(--metal-1);margin-top:2px}
 .eqnote h4{font-family:var(--disp);font-size:15px;text-transform:uppercase;margin-bottom:4px}
 .eqnote p{font-size:13px;color:var(--mut-d)}
+.eq-cert{display:flex;gap:16px;align-items:flex-start;margin-top:16px;border:1px solid var(--dline);border-radius:3px;background:var(--ink-2);padding:22px 24px}
+.eq-cert .ni{flex:none;color:var(--metal-1);margin-top:2px}
+.eq-cert p{font-size:13.5px;color:var(--mut-d);max-width:110ch}
 
 /* BENEFITS */
 .bgrid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:52px;border-top:1px solid var(--lline);border-left:1px solid var(--lline)}
 .bitem{padding:30px 26px;border-right:1px solid var(--lline);border-bottom:1px solid var(--lline);display:flex;gap:16px;align-items:center}
 .bitem .bi{flex:none;color:var(--fg-l)}
 .bitem p{font-size:14.5px;color:var(--mut-l)}
-
-/* STANDARDS */
-.stgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:52px}
-.stcard{border:1px solid var(--lline);border-radius:3px;padding:24px;background:#fff}
-.stcard .st-h{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-l);margin-bottom:10px;display:flex;align-items:center;gap:10px}
-.stcard .st-h svg{width:18px;height:18px;color:var(--fg-l);flex:none}
-.stcard p{font-size:13px;color:var(--mut-l)}
 
 /* CONTACTS */
 .cbox{display:grid;grid-template-columns:1.1fr .9fr;border:1px solid var(--dline);border-radius:3px;overflow:hidden;margin-top:52px}
@@ -217,8 +213,9 @@ footer a:hover{color:var(--fg-d)}
   .ticker .track{animation:none}
 }
 @media(max-width:940px){
-  .about-grid,.design-grid,.dgrid,.egrid,.bgrid,.stgrid,.appgrid,.eq-notes,.cbox,.cgrid-info,.fcols{grid-template-columns:1fr}
+  .about-grid,.design-grid,.dgrid,.egrid,.bgrid,.appgrid,.eq-notes,.cbox,.cgrid-info,.fcols{grid-template-columns:1fr}
   .design-media{min-height:0;aspect-ratio:16/10}
+  .design-meta{grid-template-columns:1fr 1fr;gap:20px}
   .menu,.nav-phone{display:none}
   .burger{display:inline-flex;width:48px;height:44px}
   .mobile-menu.open{display:flex}
@@ -230,7 +227,6 @@ footer a:hover{color:var(--fg-d)}
   .hero-inner{padding-top:clamp(96px,16vh,130px);padding-bottom:36px}
   .hero-scrim{background:linear-gradient(180deg,rgba(8,9,12,.72),rgba(8,9,12,.35) 140px,rgba(8,9,12,0) 340px),linear-gradient(90deg,rgba(10,11,13,.92),rgba(10,11,13,.7)),linear-gradient(0deg,rgba(10,11,13,.9),transparent 55%)}
   .hero-cta .btn{width:100%;justify-content:center}
-  .hero-meta{grid-template-columns:1fr 1fr;gap:20px}
   .hmeta .v{font-size:16px}
   .ticker .track{padding:11px 0}
   .ticker span{font-size:13px;padding:0 18px}
@@ -242,5 +238,5 @@ footer a:hover{color:var(--fg-d)}
 @media(max-width:400px){
   .hero h1{font-size:32px}
   h2.big{font-size:27px}
-  .hero-meta{grid-template-columns:1fr;gap:16px}
+  .design-meta{grid-template-columns:1fr;gap:16px}
 }
