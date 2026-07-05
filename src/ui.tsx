@@ -58,8 +58,8 @@ export function Logo({ className = 'hm-logo' }: { className?: string }) {
 }
 
 /* ---- Reveal-on-scroll wrapper ---- */
-export function Reveal({ children, as: Tag = 'div', className = '', style }: {
-  children: ReactNode; as?: 'div' | 'section'; className?: string; style?: React.CSSProperties
+export function Reveal({ children, as: Tag = 'div', className = '', style, id }: {
+  children: ReactNode; as?: 'div' | 'section'; className?: string; style?: React.CSSProperties; id?: string
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const [shown, setShown] = useState(false)
@@ -74,5 +74,5 @@ export function Reveal({ children, as: Tag = 'div', className = '', style }: {
     return () => io.disconnect()
   }, [])
   const cls = `reveal${shown ? ' in' : ''}${className ? ' ' + className : ''}`
-  return <Tag ref={ref as never} className={cls} style={style}>{children}</Tag>
+  return <Tag ref={ref as never} className={cls} style={style} id={id}>{children}</Tag>
 }

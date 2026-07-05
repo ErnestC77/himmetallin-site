@@ -46,9 +46,9 @@ h2.big{font-size:clamp(30px,4.8vw,58px);text-transform:uppercase;text-wrap:balan
    При скролле шапка становится плотной. */
 header{position:fixed;top:0;left:0;right:0;z-index:60;color:var(--fg-d);background:transparent;border-bottom:1px solid transparent;transition:background .3s ease,border-color .3s ease}
 section[id]{scroll-margin-top:82px}
-header .menu a,header .nav-phone{color:#C3CBDA;transition:color .3s ease}
+header .menu a,header .nav-phone,header .menu-dd-btn{color:#C3CBDA;transition:color .3s ease}
 header.scrolled{background:rgba(14,15,18,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--dline-2)}
-header.scrolled .menu a,header.scrolled .nav-phone{color:var(--mut-d)}
+header.scrolled .menu a,header.scrolled .nav-phone,header.scrolled .menu-dd-btn{color:var(--mut-d)}
 .nav{display:flex;align-items:center;gap:34px;height:80px}
 .brand{display:flex;align-items:center;color:currentColor}
 .brand .hm-logo{height:40px;width:auto}
@@ -61,8 +61,21 @@ header.scrolled .menu a,header.scrolled .nav-phone{color:var(--mut-d)}
 .burger{display:none;background:none;border:1px solid var(--dline);color:var(--fg-d);width:44px;height:40px;border-radius:2px;cursor:pointer;align-items:center;justify-content:center}
 .burger svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round}
 .mobile-menu{display:none;flex-direction:column;gap:2px;padding:8px clamp(20px,4vw,60px) 20px;background:var(--ink);border-bottom:1px solid var(--dline-2)}
-.mobile-menu a{font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut-d);padding:13px 0;border-bottom:1px solid var(--dline-2)}
-.mobile-menu .phone{color:var(--fg-d);padding-top:14px}
+.mobile-menu a{display:block;font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut-d);padding:13px 0;border-bottom:1px solid var(--dline-2)}
+.mobile-menu a.sub{padding:11px 0 11px 20px;font-size:12px;color:var(--mut-2)}
+.mobile-menu .phone{color:var(--fg-d);padding-top:14px;border-bottom:0}
+
+/* dropdown «Оборудование» */
+.menu-dd{position:relative;display:inline-flex}
+.menu-dd-btn{display:inline-flex;align-items:center;gap:7px;background:none;border:0;cursor:pointer;padding:0;line-height:1;white-space:nowrap;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.menu-dd-btn:hover{color:var(--fg-d)!important}
+.menu-dd-btn svg{width:12px;height:12px;transition:transform .2s ease}
+.menu-dd.open .menu-dd-btn svg{transform:rotate(180deg)}
+.dd-panel{position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%);display:flex;flex-direction:column;min-width:300px;padding:8px;background:rgba(13,14,17,.97);border:1px solid var(--dline);border-radius:4px;box-shadow:0 18px 44px -12px rgba(0,0,0,.65)}
+.dd-panel::before{content:"";position:absolute;top:-16px;left:0;right:0;height:16px}
+.dd-panel a{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut-d);padding:11px 12px;border-radius:3px;white-space:nowrap;transition:.15s}
+.dd-panel a:hover{background:var(--ink-2);color:var(--fg-d)}
+.ecard[id]{scroll-margin-top:96px}
 
 /* HERO (full-bleed image) */
 .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--dline);min-height:clamp(580px,86vh,900px);display:flex}
@@ -227,6 +240,7 @@ footer a:hover{color:var(--fg-d)}
   .nav{height:64px;gap:20px}
   .brand .hm-logo{height:30px}
   section[id]{scroll-margin-top:66px}
+  .ecard[id]{scroll-margin-top:76px}
   .sec{padding:60px 0}
   .hero{min-height:auto}
   .hero-inner{padding-top:clamp(96px,16vh,130px);padding-bottom:36px}

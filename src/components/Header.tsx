@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Logo } from '../ui'
-import { navLinks, CONTACTS } from '../data'
+import { navLinks, equipment, CONTACTS } from '../data'
 
 export default function Header() {
   const [open, setOpen] = useState(false)
+  const [eqOpen, setEqOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const ddRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -13,12 +15,41 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  useEffect(() => {
+    if (!eqOpen) return
+    const onDocClick = (e: MouseEvent) => {
+      if (ddRef.current && !ddRef.current.contains(e.target as Node)) setEqOpen(false)
+    }
+    const onEsc = (e: KeyboardEvent) => { if (e.key === 'Escape') setEqOpen(false) }
+    document.addEventListener('click', onDocClick)
+    document.addEventListener('keydown', onEsc)
+    return () => {
+      document.removeEventListener('click', onDocClick)
+      document.removeEventListener('keydown', onEsc)
+    }
+  }, [eqOpen])
+
   return (
     <header className={scrolled || open ? 'scrolled' : ''}>
       <div className="wrap nav">
         <a className="brand" href="#top" aria-label="ХИММЕТАЛЛИН — на главную"><Logo /></a>
         <nav className="menu">
-          {navLinks.map((l) => <a key={l.href} href={l.href}>{l.label}</a>)}
+          {navLinks.map((l) => l.href === '#eq' ? (
+            <div className={`menu-dd${eqOpen ? ' open' : ''}`} key={l.href} ref={ddRef}>
+              <button className="menu-dd-btn" aria-expanded={eqOpen} aria-haspopup="true"
+                onClick={() => setEqOpen(v => !v)}>
+                {l.label}
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              </button>
+              <div className="dd-panel" hidden={!eqOpen}>
+                {equipment.map((e) => (
+                  <a key={e.id} href={`#${e.id}`} onClick={() => setEqOpen(false)}>{e.h}</a>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <a key={l.href} href={l.href}>{l.label}</a>
+          ))}
         </nav>
         <div className="nav-right">
           <a className="nav-phone" href={`tel:${CONTACTS.phone.replace(/[^+\d]/g, '')}`}>{CONTACTS.phone}</a>
@@ -30,7 +61,14 @@ export default function Header() {
         </div>
       </div>
       <nav className={`mobile-menu${open ? ' open' : ''}`} onClick={() => setOpen(false)}>
-        {navLinks.map((l) => <a key={l.href} href={l.href}>{l.label}</a>)}
+        {navLinks.map((l) => (
+          <span key={l.href}>
+            <a href={l.href} style={{ display: 'block' }}>{l.label}</a>
+            {l.href === '#eq' && equipment.map((e) => (
+              <a key={e.id} className="sub" href={`#${e.id}`}>{e.h}</a>
+            ))}
+          </span>
+        ))}
         <a className="phone" href={`tel:${CONTACTS.phone.replace(/[^+\d]/g, '')}`}>{CONTACTS.phone}</a>
       </nav>
     </header>

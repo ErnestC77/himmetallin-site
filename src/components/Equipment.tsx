@@ -9,7 +9,7 @@ export default function Equipment() {
         <Reveal><h2 className="big">Критически важное технологическое оборудование</h2></Reveal>
         <div className="egrid">
           {equipment.map((e) => (
-            <Reveal className="ecard" key={e.h}>
+            <Reveal className="ecard" key={e.h} id={e.id}>
               <div className="ephoto">
                 <img src={e.img} alt={e.h} loading="lazy" />
               </div>
