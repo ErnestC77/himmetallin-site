@@ -5,8 +5,8 @@ export default function Benefits() {
   return (
     <section className="sec on-light">
       <div className="wrap">
-        <Reveal className="eyebrow">Почему ХИММЕТАЛЛИН</Reveal>
-        <Reveal><h2 className="big">Результат для объекта заказчика</h2></Reveal>
+        <Reveal className="eyebrow">Гарантии</Reveal>
+        <Reveal><h2 className="big">Мы гарантируем своим заказчикам</h2></Reveal>
         <div className="bgrid">
           {benefits.map((b, i) => (
             <Reveal className="bitem" key={i}>
