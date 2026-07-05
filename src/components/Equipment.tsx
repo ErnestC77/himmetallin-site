@@ -14,13 +14,11 @@ export default function Equipment() {
                 <span className="code">{e.code}</span>
                 <img src={e.img} alt={e.h} loading="lazy" />
               </div>
-              <div className="ebody">
-                <h3>{e.h}</h3>
-                <ul className="elist">
-                  {e.items.map((it) => <li key={it}>{it}</li>)}
-                </ul>
-                <p className="enote">{e.p}</p>
-              </div>
+              <h3>{e.h}</h3>
+              <ul className="elist">
+                {e.items.map((it) => <li key={it}>{it}</li>)}
+              </ul>
+              <p className="enote">{e.p}</p>
             </Reveal>
           ))}
         </div>
