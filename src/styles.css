@@ -147,6 +147,7 @@ header.scrolled .menu a,header.scrolled .nav-phone,header.scrolled .menu-dd-btn{
 .dcard .di{width:52px;height:52px;border:1px solid var(--lline);border-radius:2px;display:grid;place-items:center;color:var(--fg-l);margin-bottom:20px;transition:.25s}
 .dcard:hover .di{border-color:var(--fg-l);background:var(--fg-l);color:var(--paper)}
 .dcard h3{font-family:var(--disp);font-size:21px;text-transform:uppercase;margin-bottom:9px}
+.card-cover{position:absolute;inset:0;z-index:1;cursor:pointer}
 .dcard p{font-size:14px;color:var(--mut-l)}
 
 /* EQUIPMENT */
