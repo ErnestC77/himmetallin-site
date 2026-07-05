@@ -216,7 +216,10 @@ footer a:hover{color:var(--fg-d)}
 }
 @media(max-width:940px){
   .about-grid,.design-grid,.dgrid,.egrid,.bgrid,.appgrid,.eq-notes,.cbox,.cgrid-info,.fcols{grid-template-columns:1fr}
-  .design-media{min-height:0;aspect-ratio:16/10}
+  /* На мобильном фото — обычный потоковый элемент: никакой зависимости
+     от aspect-ratio/absolute, контейнер не может схлопнуться */
+  .design-media{min-height:0;aspect-ratio:auto}
+  .design-media img{position:static;width:100%;height:auto}
   .design-meta{grid-template-columns:1fr 1fr;gap:20px}
   .menu,.nav-phone{display:none}
   .burger{display:inline-flex;width:48px;height:44px}
