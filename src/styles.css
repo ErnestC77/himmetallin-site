@@ -63,6 +63,9 @@ header.scrolled .menu a,header.scrolled .nav-phone,header.scrolled .menu-dd-btn{
 .mobile-menu{display:none;flex-direction:column;gap:2px;padding:8px clamp(20px,4vw,60px) 20px;background:var(--ink);border-bottom:1px solid var(--dline-2)}
 .mobile-menu a{display:block;font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut-d);padding:13px 0;border-bottom:1px solid var(--dline-2)}
 .mobile-menu a.sub{padding:11px 0 11px 20px;font-size:12px;color:var(--mut-2)}
+.mobile-menu .mob-dd-btn{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:0;border-bottom:1px solid var(--dline-2);cursor:pointer;text-align:left;font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut-d);padding:13px 0}
+.mobile-menu .mob-dd-btn svg{width:14px;height:14px;transition:transform .2s ease}
+.mobile-menu .mob-dd-btn.open svg{transform:rotate(180deg)}
 .mobile-menu .phone{color:var(--fg-d);padding-top:14px;border-bottom:0}
 
 /* dropdown «Оборудование» */

@@ -5,8 +5,11 @@ import { navLinks, equipment, CONTACTS } from '../data'
 export default function Header() {
   const [open, setOpen] = useState(false)
   const [eqOpen, setEqOpen] = useState(false)
+  const [eqMobOpen, setEqMobOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const ddRef = useRef<HTMLDivElement>(null)
+
+  const closeMobile = () => { setOpen(false); setEqMobOpen(false) }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -56,23 +59,30 @@ export default function Header() {
         </nav>
         <div className="nav-right">
           <a className="nav-phone" href={`tel:${CONTACTS.phone.replace(/[^+\d]/g, '')}`}>{CONTACTS.phone}</a>
-          <button className="burger" aria-label="Меню" aria-expanded={open} onClick={() => setOpen(v => !v)}>
+          <button className="burger" aria-label="Меню" aria-expanded={open}
+            onClick={() => { if (open) setEqMobOpen(false); setOpen(v => !v) }}>
             <svg viewBox="0 0 24 24">{open
               ? <path d="M6 6l12 12M18 6L6 18" />
               : <path d="M4 7h16M4 12h16M4 17h16" />}</svg>
           </button>
         </div>
       </div>
-      <nav className={`mobile-menu${open ? ' open' : ''}`} onClick={() => setOpen(false)}>
-        {navLinks.map((l) => (
-          <span key={l.href}>
-            <a href={l.href} style={{ display: 'block' }}>{l.label}</a>
-            {l.href === '#eq' && equipment.map((e) => (
-              <a key={e.id} className="sub" href={`#${e.id}`}>{e.h}</a>
+      <nav className={`mobile-menu${open ? ' open' : ''}`}>
+        {navLinks.map((l) => l.href === '#eq' ? (
+          <div key={l.href}>
+            <button className={`mob-dd-btn${eqMobOpen ? ' open' : ''}`} aria-expanded={eqMobOpen}
+              onClick={() => setEqMobOpen(v => !v)}>
+              {l.label}
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </button>
+            {eqMobOpen && equipment.map((e) => (
+              <a key={e.id} className="sub" href={`#${e.id}`} onClick={closeMobile}>{e.h}</a>
             ))}
-          </span>
+          </div>
+        ) : (
+          <a key={l.href} href={l.href} onClick={closeMobile}>{l.label}</a>
         ))}
-        <a className="phone" href={`tel:${CONTACTS.phone.replace(/[^+\d]/g, '')}`}>{CONTACTS.phone}</a>
+        <a className="phone" href={`tel:${CONTACTS.phone.replace(/[^+\d]/g, '')}`} onClick={closeMobile}>{CONTACTS.phone}</a>
       </nav>
     </header>
   )
