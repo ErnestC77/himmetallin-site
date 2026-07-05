@@ -188,7 +188,9 @@ header.scrolled .menu a,header.scrolled .nav-phone{color:var(--mut-d)}
 .req .rk{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut-d)}
 .req .rv{color:var(--fg-d);margin-top:2px;font-size:13px}
 .cpanel{border:1px solid var(--dline);border-radius:3px;background:var(--ink-2);padding:clamp(28px,3.6vw,48px);margin-top:52px}
-.cpanel-h{font-family:var(--disp);font-size:22px;text-transform:uppercase;color:var(--fg-d);margin-bottom:28px}
+.cpanel-h{font-family:var(--disp);font-size:22px;text-transform:uppercase;color:var(--fg-d);margin-bottom:10px}
+.cpanel-full{font-size:14px;color:var(--mut-d);margin-bottom:28px;max-width:80ch}
+.req .rv.mono{font-variant-numeric:tabular-nums;letter-spacing:.02em;word-break:break-all}
 .cgrid-info{display:grid;grid-template-columns:1fr 1fr;gap:22px 40px}
 a.v:hover{color:var(--metal-1)}
 

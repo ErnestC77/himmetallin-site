@@ -8,12 +8,22 @@ import imgBoiler from './assets/photos/img_3047.webp'
 import imgAcs from './assets/photos/img_3022.webp'
 
 export const CONTACTS = {
+  companyFull: 'Общество с ограниченной ответственностью «Химметалл Инжиниринг»',
   company: 'ООО «ХИММЕТАЛЛИН»',
   phone: '+7 (000) 000-00-00',
-  email: 'info@himmetallin.ru',
-  address: 'Фактический и юридический адрес — уточняется',
+  email: 'info@chemmetalleng.com',
+  address: '117105, РФ, г. Москва, Варшавское шоссе, д. 33, этаж 12, помещение 1а/1',
   hours: 'Пн–Пт · 09:00–18:00',
 }
+
+export const REQUISITES = [
+  { k: 'ИНН', v: '9726012933' },
+  { k: 'КПП', v: '772601001' },
+  { k: 'Р/с', v: '40702810000810026047' },
+  { k: 'К/с', v: '30101810145250000411' },
+  { k: 'БИК', v: '044525411' },
+  { k: 'Банк', v: 'Филиал «Центральный» Банка ВТБ (ПАО)' },
+]
 
 export const photos = { heroBg: heroRefinery, about: imgTeam }
 
