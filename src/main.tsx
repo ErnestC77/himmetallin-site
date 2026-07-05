@@ -20,6 +20,19 @@ window.addEventListener(
   true,
 )
 
+// iOS восстанавливает вкладку из bfcache вместе с уже битыми картинками, и событие
+// error для них больше не приходит. При показе страницы перезагружаем все битые <img>.
+function healBrokenImages() {
+  document.querySelectorAll('img').forEach((img) => {
+    if (img.complete && img.naturalWidth === 0 && img.src) {
+      const base = img.src.split('?')[0]
+      img.src = `${base}?heal=${Date.now()}`
+    }
+  })
+}
+window.addEventListener('pageshow', healBrokenImages)
+document.addEventListener('visibilitychange', () => { if (!document.hidden) healBrokenImages() })
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
