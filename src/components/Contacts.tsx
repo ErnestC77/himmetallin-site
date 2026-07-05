@@ -9,7 +9,7 @@ export default function Contacts() {
         <Reveal><h2 className="big">Официальная информация компании</h2></Reveal>
         <Reveal className="cpanel">
           <h3 className="cpanel-h">{CONTACTS.company}</h3>
-          <p className="cpanel-full">Полное наименование — {CONTACTS.companyFull} (сокращённое наименование — {CONTACTS.company}).</p>
+          <p className="cpanel-full">Полное наименование — {CONTACTS.companyFull}.</p>
           <div className="cgrid-info">
             <div className="cline"><span className="ci"><Ic name="phone" className="ic" /></span>
               <div><div className="l">Телефон</div><a className="v" href={`tel:${CONTACTS.phone.replace(/[^+\d]/g, '')}`}>{CONTACTS.phone}</a></div></div>
