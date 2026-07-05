@@ -35,17 +35,20 @@ export default function Header() {
         <a className="brand" href="#top" aria-label="ХИММЕТАЛЛИН — на главную"><Logo /></a>
         <nav className="menu">
           {navLinks.map((l) => l.href === '#eq' ? (
-            <div className={`menu-dd${eqOpen ? ' open' : ''}`} key={l.href} ref={ddRef}>
+            <div className={`menu-dd${eqOpen ? ' open' : ''}`} key={l.href} ref={ddRef}
+              onMouseEnter={() => setEqOpen(true)} onMouseLeave={() => setEqOpen(false)}>
               <button className="menu-dd-btn" aria-expanded={eqOpen} aria-haspopup="true"
                 onClick={() => setEqOpen(v => !v)}>
                 {l.label}
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
               </button>
-              <div className="dd-panel" hidden={!eqOpen}>
-                {equipment.map((e) => (
-                  <a key={e.id} href={`#${e.id}`} onClick={() => setEqOpen(false)}>{e.h}</a>
-                ))}
-              </div>
+              {eqOpen && (
+                <div className="dd-panel">
+                  {equipment.map((e) => (
+                    <a key={e.id} href={`#${e.id}`} onClick={() => setEqOpen(false)}>{e.h}</a>
+                  ))}
+                </div>
+              )}
             </div>
           ) : (
             <a key={l.href} href={l.href}>{l.label}</a>
