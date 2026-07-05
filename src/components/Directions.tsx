@@ -5,8 +5,8 @@ export default function Directions() {
   return (
     <section className="sec on-light on-paper2" id="dir">
       <div className="wrap">
-        <Reveal className="eyebrow">Основные направления</Reveal>
-        <Reveal><h2 className="big">Компетенции для объектов НПЗ, химии и металлургии</h2></Reveal>
+        <Reveal className="eyebrow">Направления</Reveal>
+        <Reveal><h2 className="big">Основные направления деятельности</h2></Reveal>
         <div className="dgrid">
           {directions.map((d) => (
             <Reveal className="dcard" key={d.n}>

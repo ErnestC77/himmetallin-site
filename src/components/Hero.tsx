@@ -8,9 +8,9 @@ export default function Hero() {
       <div className="hero-scrim" />
       <div className="wrap hero-inner">
         <div className="hero-copy">
-          <Reveal className="eyebrow">НПЗ / металлургия / инжиниринг</Reveal>
+          <Reveal className="eyebrow">Объекты нефтепереработки и металлургии</Reveal>
           <Reveal><h1 style={{ marginTop: 20 }}>Инжиниринг и комплексное оснащение</h1></Reveal>
-          <Reveal><p className="sub">ООО «ХИММЕТАЛЛИН» — специализированная инжиниринговая компания: полный комплекс услуг по проектированию технологических установок и комплектации предприятий нефтеперерабатывающей и металлургической промышленности.</p></Reveal>
+          <Reveal><p className="sub">ООО «ХИММЕТАЛЛИН» — специализированная инжиниринговая компания, обеспечивающая полный комплекс услуг в области проектирования технологических установок и комплектации предприятий нефтеперерабатывающей и металлургической промышленности.</p></Reveal>
           <Reveal>
             <div className="hero-chips">
               {heroChips.map((c) => (

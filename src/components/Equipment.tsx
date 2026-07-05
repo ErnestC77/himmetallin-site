@@ -6,12 +6,11 @@ export default function Equipment() {
     <section className="sec on-dark" id="eq">
       <div className="wrap">
         <Reveal className="eyebrow">Поставляемое оборудование</Reveal>
-        <Reveal><h2 className="big">Критически важные технологические узлы</h2></Reveal>
+        <Reveal><h2 className="big">Критически важное технологическое оборудование</h2></Reveal>
         <div className="egrid">
           {equipment.map((e) => (
-            <Reveal className="ecard" key={e.code}>
+            <Reveal className="ecard" key={e.h}>
               <div className="ephoto">
-                <span className="code">{e.code}</span>
                 <img src={e.img} alt={e.h} loading="lazy" />
               </div>
               <h3>{e.h}</h3>

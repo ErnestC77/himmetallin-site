@@ -158,7 +158,7 @@ header.scrolled .menu a,header.scrolled .nav-phone{color:var(--mut-d)}
 .eq-cert p{font-size:13.5px;color:var(--mut-d);max-width:110ch}
 
 /* BENEFITS */
-.bgrid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:52px;border-top:1px solid var(--lline);border-left:1px solid var(--lline)}
+.bgrid{display:grid;grid-template-columns:repeat(2,1fr);margin-top:52px;border-top:1px solid var(--lline);border-left:1px solid var(--lline)}
 .bitem{padding:30px 26px;border-right:1px solid var(--lline);border-bottom:1px solid var(--lline);display:flex;gap:16px;align-items:center}
 .bitem .bi{flex:none;color:var(--fg-l)}
 .bitem p{font-size:14.5px;color:var(--mut-l)}

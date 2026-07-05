@@ -16,7 +16,6 @@ export default function Design() {
         <div className="design-grid">
           <Reveal className="design-media">
             <img src={designPhoto} alt="Проектирование технологической установки: CAD-модель и схемы ПАЗ / АСУ ТП" loading="lazy" />
-            <span className="cap">Рабочая среда проектирования</span>
           </Reveal>
           <div className="design-list">
             {designItems.map((d) => (
