@@ -117,8 +117,8 @@ header.scrolled .menu a,header.scrolled .nav-phone,header.scrolled .nav-mail,hea
 @keyframes scroll{to{transform:translateX(-50%)}}
 
 /* ABOUT */
-.about-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,5vw,68px);margin-top:52px;align-items:start}
-.about-copy p{color:var(--mut-l);margin-bottom:18px;max-width:56ch}
+.about-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:clamp(22px,3vw,38px);margin-top:52px;align-items:start}
+.about-copy p{color:var(--mut-l);margin-bottom:18px;max-width:none}
 .about-points{margin-top:30px;border-top:1px solid var(--lline)}
 .apoint{display:flex;gap:20px;padding:22px 0;border-bottom:1px solid var(--lline)}
 .apoint .n{font-family:var(--disp);font-weight:600;font-size:clamp(26px,2.4vw,34px);color:var(--lline);line-height:1;flex:none;min-width:56px}
