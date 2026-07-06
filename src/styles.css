@@ -124,8 +124,8 @@ header.scrolled .menu a,header.scrolled .nav-phone,header.scrolled .nav-mail,hea
 .apoint .n{font-family:var(--disp);font-weight:600;font-size:clamp(26px,2.4vw,34px);color:var(--lline);line-height:1;flex:none;min-width:56px}
 .apoint h4{font-family:var(--disp);font-size:18px;text-transform:uppercase;margin-bottom:4px}
 .apoint p{font-size:14.5px;color:var(--mut-l)}
-.about-media{position:relative;border:1px solid var(--lline);border-radius:3px;overflow:hidden;background:var(--paper-2)}
-.about-media img{width:100%;height:auto}
+.about-media{position:relative;border:1px solid var(--lline);border-radius:3px;overflow:hidden;background:var(--paper-2);margin-top:6px}
+.about-media img{width:100%;height:auto;display:block}
 
 /* DESIGN (проектирование установок) */
 .design-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(24px,4vw,56px);margin-top:44px;align-items:stretch}
@@ -284,6 +284,7 @@ footer a:hover{color:var(--fg-d)}
      от aspect-ratio/absolute, контейнер не может схлопнуться */
   .design-media{min-height:0;aspect-ratio:auto}
   .design-media img{position:static;width:100%;height:auto}
+  .about-media{margin-top:0}
     .menu,.nav-contacts{display:none}
   .burger{display:inline-flex;width:48px;height:44px}
   .mobile-menu.open{display:flex}
