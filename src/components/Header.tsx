@@ -58,7 +58,10 @@ export default function Header() {
           ))}
         </nav>
         <div className="nav-right">
-          <a className="nav-phone" href={`tel:${CONTACTS.phone.replace(/[^+\d]/g, '')}`}>{CONTACTS.phone}</a>
+          <div className="nav-contacts">
+            <a className="nav-phone" href={`tel:${CONTACTS.phone.replace(/[^+\d]/g, '')}`}>{CONTACTS.phone}</a>
+            <a className="nav-mail" href={`mailto:${CONTACTS.email}`}>{CONTACTS.email}</a>
+          </div>
           <button className="burger" aria-label="Меню" aria-expanded={open}
             onClick={() => { if (open) setEqMobOpen(false); setOpen(v => !v) }}>
             <svg viewBox="0 0 24 24">{open
@@ -83,6 +86,7 @@ export default function Header() {
           <a key={l.href} href={l.href} onClick={closeMobile}>{l.label}</a>
         ))}
         <a className="phone" href={`tel:${CONTACTS.phone.replace(/[^+\d]/g, '')}`} onClick={closeMobile}>{CONTACTS.phone}</a>
+        <a className="phone" href={`mailto:${CONTACTS.email}`} onClick={closeMobile}>{CONTACTS.email}</a>
       </nav>
     </header>
   )
