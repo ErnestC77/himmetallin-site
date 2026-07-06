@@ -104,7 +104,7 @@ header.scrolled .menu a,header.scrolled .nav-phone,header.scrolled .nav-mail,hea
 .appcard:hover{border-color:var(--metal-2)}
 .appcard .ai{width:48px;height:48px;border:1px solid var(--lline);border-radius:2px;display:grid;place-items:center;color:var(--fg-l)}
 .appcard h4{font-family:var(--disp);font-size:18px;text-transform:uppercase}
-.appcard p{font-size:13.5px;color:var(--mut-l)}
+.appcard p{font-size:13.5px;color:var(--mut-l);text-align:justify;text-wrap:pretty}
 
 /* TICKER */
 .ticker{background:var(--fg-d);color:var(--ink);overflow:hidden;white-space:nowrap}
@@ -147,7 +147,7 @@ header.scrolled .menu a,header.scrolled .nav-phone,header.scrolled .nav-mail,hea
 .dcard:hover .di{border-color:var(--fg-l);background:var(--fg-l);color:var(--paper)}
 .dcard h3{font-family:var(--disp);font-size:21px;text-transform:uppercase;margin-bottom:9px}
 .card-cover{position:absolute;inset:0;z-index:1;cursor:pointer}
-.dcard p{font-size:14px;color:var(--mut-l)}
+.dcard p{font-size:14px;color:var(--mut-l);text-align:justify;text-wrap:pretty}
 
 /* EQUIPMENT */
 .egrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:52px}
