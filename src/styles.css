@@ -164,17 +164,24 @@ header.scrolled .menu a,header.scrolled .nav-phone,header.scrolled .menu-dd-btn{
 .elist{list-style:none;display:flex;flex-direction:column;gap:8px;padding:14px 24px 0}
 .elist li{position:relative;padding-left:18px;font-size:13.5px;color:#C6CBD3;line-height:1.5}
 .elist li::before{content:"";position:absolute;left:2px;top:9px;width:6px;height:1.5px;background:var(--metal-2)}
-/* сворачиваемые характеристики */
-.eacc{margin:16px 24px 20px;border-top:1px solid var(--dline-2)}
-.eacc summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:15px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--metal-1);transition:.15s}
-.eacc summary:hover{color:var(--fg-d)}
-.eacc summary::-webkit-details-marker{display:none}
-.eacc summary::after{content:"";flex:none;width:8px;height:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translate(-2px,-2px);transition:transform .2s ease}
-.eacc[open] summary::after{transform:rotate(225deg) translate(-3px,-3px)}
+/* кнопка «Технические характеристики» + модальное окно */
+.eacc-btn{margin:16px 24px 20px;border:0;border-top:1px solid var(--dline-2);background:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 0 0;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--metal-1);transition:.15s;text-align:left}
+.eacc-btn:hover{color:var(--fg-d)}
+.eacc-btn svg{flex:none;width:14px;height:14px}
 .especs{display:flex;flex-direction:column;gap:10px;margin-top:14px}
 .especs .sk{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--metal-2);margin-bottom:2px}
 .especs .sv{font-size:13px;color:#C6CBD3;line-height:1.5;white-space:pre-line}
-.eacc .enote{margin-top:14px;padding-top:12px;border-top:1px solid var(--dline-2);font-size:12.5px;color:var(--mut-d)}
+.eq-modal{position:fixed;inset:0;z-index:90;background:rgba(8,9,12,.74);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px;animation:mfade .18s ease}
+.eq-modal-panel{background:var(--ink-2);border:1px solid var(--dline);border-radius:4px;width:100%;max-width:680px;max-height:min(82vh,780px);overflow:auto;padding:clamp(22px,3vw,34px);box-shadow:0 30px 80px -20px rgba(0,0,0,.7);animation:mrise .2s ease}
+.eq-modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.eq-modal-head h3{font-family:var(--disp);font-size:21px;text-transform:uppercase;color:var(--fg-d)}
+.eq-modal-close{flex:none;width:40px;height:40px;background:none;border:1px solid var(--dline);border-radius:2px;color:var(--mut-d);cursor:pointer;display:grid;place-items:center;transition:.15s}
+.eq-modal-close:hover{color:var(--fg-d);border-color:var(--metal-2)}
+.eq-modal-close svg{width:16px;height:16px}
+.eq-modal .enote{margin-top:16px;padding-top:12px;border-top:1px solid var(--dline-2);font-size:12.5px;color:var(--mut-d)}
+@keyframes mfade{from{opacity:0}}
+@keyframes mrise{from{opacity:0;transform:translateY(10px)}}
+@media(prefers-reduced-motion:reduce){.eq-modal,.eq-modal-panel{animation:none}}
 .eq-notes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
 .eqnote{display:flex;gap:14px;align-items:flex-start;border:1px solid var(--dline);border-radius:3px;background:var(--ink-2);padding:20px 22px}
 .eqnote .ni{flex:none;color:var(--metal-1);margin-top:2px}
@@ -266,7 +273,9 @@ footer a:hover{color:var(--fg-d)}
   .dcard,.aitem,.bitem{padding:26px 22px}
   .ecard h3{padding:20px 20px 0}
   .elist{padding:12px 20px 0}
-  .eacc{margin:14px 20px 18px}
+  .eacc-btn{margin:14px 20px 18px}
+  .eq-modal{padding:14px}
+  .eq-modal-panel{max-height:86dvh}
   .fcols{gap:30px}
   .req{grid-template-columns:1fr}
 }
