@@ -28,9 +28,19 @@ export default function Equipment() {
                 <img src={e.img} alt={e.h} loading="lazy" />
               </div>
               <h3>{e.h}</h3>
-              <ul className="elist">
-                {e.items.map((it) => <li key={it}>{it}</li>)}
-              </ul>
+              <div className="elists">
+                <ul className="elist">
+                  {e.items.map((it) => <li key={it}>{it}</li>)}
+                </ul>
+                {e.sub && (
+                  <>
+                    <div className="elist-sub">{e.sub.title}</div>
+                    <ul className="elist">
+                      {e.sub.items.map((it) => <li key={it}>{it}</li>)}
+                    </ul>
+                  </>
+                )}
+              </div>
               <button className="eacc-btn" onClick={() => setOpen(i)}>
                 Технические характеристики
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
