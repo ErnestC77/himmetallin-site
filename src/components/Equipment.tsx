@@ -17,6 +17,14 @@ export default function Equipment() {
               <ul className="elist">
                 {e.items.map((it) => <li key={it}>{it}</li>)}
               </ul>
+              <div className="especs">
+                {e.specs.map((s) => (
+                  <div className="srow" key={s.k}>
+                    <span className="sk">{s.k}</span>
+                    <span className="sv">{s.v}</span>
+                  </div>
+                ))}
+              </div>
               <p className="enote">{e.p}</p>
             </Reveal>
           ))}
