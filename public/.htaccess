@@ -1,0 +1,43 @@
+# === ХИММЕТАЛЛИН — конфигурация Apache для виртуального хостинга nic.ru ===
+# Заголовки безопасности (на Render они ставились через API, здесь — файлом).
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=()"
+  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; img-src 'self' data:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; form-action 'self'"
+  # HSTS — раскомментировать ТОЛЬКО когда HTTPS стабильно работает на домене:
+  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>
+
+# Сжатие текстовых ответов
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# Кеширование
+<IfModule mod_expires.c>
+  ExpiresActive On
+  # Хешированные ассеты (js/css/шрифты) — на год, immutable
+  <FilesMatch "\.(js|css|woff2?)$">
+    ExpiresDefault "access plus 1 year"
+    Header set Cache-Control "public, immutable"
+  </FilesMatch>
+  # Картинки (в т.ч. favicon.svg без хеша) — на неделю
+  <FilesMatch "\.(png|jpe?g|webp|svg|ico)$">
+    ExpiresDefault "access plus 7 days"
+  </FilesMatch>
+  # HTML — без кеша, чтобы обновления подхватывались сразу
+  <FilesMatch "\.html$">
+    ExpiresDefault "access plus 0 seconds"
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
+
+# Принудительный HTTPS — раскомментировать после выпуска SSL-сертификата на хостинге:
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
+#   RewriteCond %{HTTPS} off
+#   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# </IfModule>

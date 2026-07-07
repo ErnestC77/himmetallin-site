@@ -1,0 +1,44 @@
+name: Deploy to nic.ru (FTP)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      HAS_FTP: ${{ secrets.NICRU_FTP_SERVER != '' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      # Заливка собранного dist на виртуальный хостинг nic.ru по FTP.
+      # Шаг выполняется только если заданы секреты (иначе просто пропускается).
+      - name: FTP deploy to nic.ru
+        if: env.HAS_FTP == 'true'
+        uses: SamKirkland/FTP-Deploy-Action@8e83cea8672e3fbcbb9fdafff34debf6ae4c5f65 # v4.3.5
+        with:
+          server: ${{ secrets.NICRU_FTP_SERVER }}      # напр. ftp.<login>.nichost.ru
+          username: ${{ secrets.NICRU_FTP_USERNAME }}   # FTP-логин хостинга
+          password: ${{ secrets.NICRU_FTP_PASSWORD }}   # FTP-пароль
+          protocol: ftp                                 # nic.ru: ftp; при поддержке TLS поменять на ftps
+          local-dir: ./dist/
+          server-dir: ${{ secrets.NICRU_FTP_DIR }}      # корень сайта, напр. /<домен>/docs/ (обязательно со слэшем в конце)
+          dangerous-clean-slate: false                  # инкрементальная синхронизация, не удаляет чужие файлы
