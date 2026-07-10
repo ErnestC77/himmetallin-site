@@ -7,7 +7,8 @@
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=()"
   Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; img-src 'self' data:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; form-action 'self'"
-  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  # HSTS — раскомментировать ТОЛЬКО когда HTTPS стабильно работает на домене:
+  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 </IfModule>
 
 # Сжатие текстовых ответов
@@ -34,12 +35,9 @@
   </FilesMatch>
 </IfModule>
 
-# Каноникализация домена и протокола: www -> без www, http -> https (в один редирект).
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteCond %{HTTP_HOST} ^www\.chemmetalleng\.com$ [NC]
-  RewriteRule ^ https://chemmetalleng.com%{REQUEST_URI} [L,R=301]
-
-  RewriteCond %{HTTPS} off
-  RewriteRule ^ https://chemmetalleng.com%{REQUEST_URI} [L,R=301]
-</IfModule>
+# Принудительный HTTPS — раскомментировать после выпуска SSL-сертификата на хостинге:
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
+#   RewriteCond %{HTTPS} off
+#   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# </IfModule>
