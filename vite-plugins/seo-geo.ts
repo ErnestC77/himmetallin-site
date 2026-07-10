@@ -11,16 +11,42 @@ import {
 
 const SITE_URL = 'https://chemmetalleng.com'
 
+const ALTERNATE_NAMES = [
+  'ХИММЕТАЛЛИН',
+  'Химметаллин',
+  'Химметалл Инжиниринг',
+  'ООО «Химметалл Инжиниринг»',
+  'CHEMMETALLENG',
+  'Chemmetall Engineering',
+]
+
+const ORGANIZATION_DESCRIPTION = 'ООО «ХИММЕТАЛЛИН» — проектирование технологических установок и комплектация предприятий нефтепереработки и металлургии. Насосы, теплообменники, ёмкости, котельные, АСУ ТП.'
+
+// Какие категории оборудования (equipment[].id) относятся к какому направлению
+// (directions[].href) — направление "Системы охлаждения" объединяет две категории
+// оборудования (АВО и градирни), поэтому связь не выводится из строк автоматически.
+const DIRECTION_EQUIPMENT_IDS: Record<string, string[]> = {
+  '#design': [],
+  '#eq-pump': ['eq-pump'],
+  '#eq-cooling': ['eq-cooling', 'eq-tower'],
+  '#eq-hx': ['eq-hx'],
+  '#eq-vessel': ['eq-vessel'],
+  '#eq-boiler': ['eq-boiler'],
+}
+
 export function buildJsonLd(): { '@context': string; '@graph': object[] } {
   const organization = {
     '@type': 'Organization',
     '@id': `${SITE_URL}/#organization`,
     name: CONTACTS.company,
     legalName: CONTACTS.companyFull,
+    alternateName: ALTERNATE_NAMES,
     url: `${SITE_URL}/`,
+    description: ORGANIZATION_DESCRIPTION,
     logo: `${SITE_URL}/logo.svg`,
     email: CONTACTS.email,
     telephone: CONTACTS.phone,
+    taxID: REQUISITES.find((r) => r.k === 'ИНН')?.v,
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Варшавское шоссе, д. 33, этаж 12, помещение 1а/1',
@@ -31,31 +57,40 @@ export function buildJsonLd(): { '@context': string; '@graph': object[] } {
     knowsAbout: applications.map((a) => a.h),
   }
 
-  const services = directions.map((d) => ({
-    '@type': 'Service',
-    '@id': `${SITE_URL}/#service-${d.href.slice(1)}`,
-    name: d.h,
-    description: d.p,
-    provider: { '@id': `${SITE_URL}/#organization` },
-    areaServed: 'RU',
-  }))
+  const website = {
+    '@type': 'WebSite',
+    '@id': `${SITE_URL}/#website`,
+    url: `${SITE_URL}/`,
+    name: CONTACTS.company,
+    alternateName: CONTACTS.companyFull,
+    publisher: { '@id': `${SITE_URL}/#organization` },
+    inLanguage: 'ru-RU',
+  }
 
-  const products = equipment.map((e) => ({
-    '@type': 'Product',
-    '@id': `${SITE_URL}/#product-${e.id}`,
-    name: e.h,
-    description: e.p,
-    brand: { '@id': `${SITE_URL}/#organization` },
-    additionalProperty: e.specs.map((s) => ({
-      '@type': 'PropertyValue',
-      name: s.k,
-      value: s.v,
-    })),
-  }))
+  const services = directions.map((d) => {
+    const equipmentIds = DIRECTION_EQUIPMENT_IDS[d.href] ?? []
+    const relatedEquipment = equipment.filter((e) => equipmentIds.includes(e.id))
+    const additionalProperty = relatedEquipment.flatMap((e) =>
+      e.specs.map((s) => ({
+        '@type': 'PropertyValue',
+        name: `${e.h}: ${s.k}`,
+        value: s.v,
+      })),
+    )
+    return {
+      '@type': 'Service',
+      '@id': `${SITE_URL}/#service-${d.href.slice(1)}`,
+      name: d.h,
+      description: d.p,
+      provider: { '@id': `${SITE_URL}/#organization` },
+      areaServed: 'RU',
+      ...(additionalProperty.length > 0 ? { additionalProperty } : {}),
+    }
+  })
 
   return {
     '@context': 'https://schema.org',
-    '@graph': [organization, ...services, ...products],
+    '@graph': [organization, website, ...services],
   }
 }
 
@@ -67,6 +102,7 @@ export function buildLlmsTxt(): string {
   lines.push('')
   lines.push('## Компания')
   lines.push(`- Юридическое название: ${CONTACTS.companyFull}`)
+  lines.push(`- Альтернативные написания: ${ALTERNATE_NAMES.join(', ')}`)
   lines.push(`- ${REQUISITES.map((r) => `${r.k} ${r.v}`).join(', ')}`)
   lines.push(`- Контакты: ${CONTACTS.email}, ${CONTACTS.phone}`)
   lines.push(`- Адрес: ${CONTACTS.address}`)

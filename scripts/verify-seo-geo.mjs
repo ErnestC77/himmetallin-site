@@ -17,15 +17,21 @@ if (!Array.isArray(graph)) {
 
 const byType = (t) => graph.filter((n) => n['@type'] === t)
 const orgs = byType('Organization')
+const websites = byType('WebSite')
 const services = byType('Service')
 const products = byType('Product')
 
 const checks = [
   [orgs.length === 1, `expected 1 Organization, got ${orgs.length}`],
+  [websites.length === 1, `expected 1 WebSite, got ${websites.length}`],
   [services.length === 6, `expected 6 Service, got ${services.length}`],
-  [products.length === 6, `expected 6 Product, got ${products.length}`],
+  [products.length === 0, `expected 0 Product (merged into Service.additionalProperty), got ${products.length}`],
   [Array.isArray(orgs[0]?.knowsAbout) && orgs[0].knowsAbout.length === 6, 'Organization.knowsAbout must have 6 entries'],
-  [products.every((p) => Array.isArray(p.additionalProperty) && p.additionalProperty.length > 0), 'every Product needs non-empty additionalProperty'],
+  [Array.isArray(orgs[0]?.alternateName) && orgs[0].alternateName.length === 6, 'Organization.alternateName must have 6 entries'],
+  [typeof orgs[0]?.description === 'string' && orgs[0].description.length > 0, 'Organization.description must be non-empty'],
+  [typeof orgs[0]?.taxID === 'string' && orgs[0].taxID.length > 0, 'Organization.taxID must be non-empty'],
+  [websites[0]?.publisher?.['@id'] === orgs[0]?.['@id'], 'WebSite.publisher must reference the Organization @id'],
+  [services.filter((s) => Array.isArray(s.additionalProperty) && s.additionalProperty.length > 0).length === 5, 'expected exactly 5 of 6 Service entries to carry equipment additionalProperty (the design/#design direction has none)'],
 ]
 
 const failures = checks.filter(([ok]) => !ok)
@@ -43,5 +49,9 @@ if (!llmsTxt.includes('## Направления деятельности') || !
   console.error('FAIL: dist/llms.txt missing expected sections')
   process.exit(1)
 }
+if (!llmsTxt.includes('Альтернативные написания')) {
+  console.error('FAIL: dist/llms.txt missing alternate names line')
+  process.exit(1)
+}
 
-console.log(`OK: ${orgs.length} Organization, ${services.length} Service, ${products.length} Product, llms.txt valid`)
+console.log(`OK: ${orgs.length} Organization, ${websites.length} WebSite, ${services.length} Service (5 with additionalProperty), 0 Product, llms.txt valid`)
