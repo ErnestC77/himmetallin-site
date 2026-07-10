@@ -78,7 +78,10 @@ export function buildLlmsTxt(): string {
   lines.push('')
   lines.push('## Оборудование')
   for (const e of equipment) {
-    const specLine = e.specs.slice(0, 3).map((s) => `${s.k}: ${s.v.split('\n')[0]}`).join('; ')
+    const specLine = e.specs
+      .slice(0, 3)
+      .map((s) => `${s.k}: ${s.v.split('\n')[0].replace(/;\s*$/, '')}`)
+      .join('; ')
     lines.push(`- ${e.h} — ${specLine}`)
   }
   lines.push('')
@@ -97,9 +100,9 @@ export function seoGeoPlugin(): Plugin {
   return {
     name: 'seo-geo',
     transformIndexHtml(html) {
-      const jsonLd = JSON.stringify(buildJsonLd(), null, 2)
+      const jsonLd = JSON.stringify(buildJsonLd(), null, 2).replace(/</g, '\\u003c')
       const script = `    <script type="application/ld+json">\n${jsonLd}\n    </script>\n  `
-      return html.replace('</head>', `${script}</head>`)
+      return html.replace('</head>', () => `${script}</head>`)
     },
     generateBundle() {
       this.emitFile({
