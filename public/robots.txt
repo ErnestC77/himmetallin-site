@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://chemmetalleng.com/sitemap.xml
