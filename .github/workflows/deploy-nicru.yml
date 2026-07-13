@@ -45,3 +45,8 @@ jobs:
           local-dir: ./dist/
           server-dir: ${{ secrets.NICRU_FTP_DIR }}      # корень сайта, напр. /<домен>/docs/ (обязательно со слэшем в конце)
           dangerous-clean-slate: false                  # инкрементальная синхронизация, не удаляет чужие файлы
+
+      - name: Ping Yandex IndexNow
+        if: env.HAS_FTP == 'true'
+        run: |
+          curl -sf "https://yandex.com/indexnow?url=https://chemmetalleng.com/&key=c54301433a2949cc8d83367919650d7f&keyLocation=https://chemmetalleng.com/c54301433a2949cc8d83367919650d7f.txt" || true
