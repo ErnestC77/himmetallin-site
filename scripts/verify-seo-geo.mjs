@@ -40,6 +40,11 @@ if (failures.length) {
   process.exit(1)
 }
 
+if (!html.includes('Полную совместимость поставляемых узлов.')) {
+  console.error('FAIL: dist/index.html has no prerendered visible page content (still an empty <div id="root">?)')
+  process.exit(1)
+}
+
 const llmsTxt = readFileSync('dist/llms.txt', 'utf-8')
 if (!llmsTxt.startsWith('# ')) {
   console.error('FAIL: dist/llms.txt does not start with a markdown heading')
